@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Histórico de Movimentações</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2436",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+    <div
+        class="relative flex flex-col w-full max-w-md mx-auto min-h-screen overflow-x-hidden bg-background-light dark:bg-background-dark">
+        <!-- TopAppBar -->
+        <div
+            class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark/95 backdrop-blur-sm p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800">
+            <div onclick="window.location.href='../dashboard/code.html'"
+                class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </div>
+            <h2
+                class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
+                Histórico</h2>
+            <div class="flex w-12 items-center justify-end absolute right-4">
+                <button
+                    class="flex items-center justify-center rounded-full h-10 w-10 bg-transparent text-primary hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined">filter_list</span>
+                </button>
+            </div>
+        </div>
+        <!-- SearchBar -->
+        <div class="px-4 py-3">
+            <label class="flex flex-col w-full">
+                <div
+                    class="flex w-full flex-1 items-stretch rounded-xl h-12 shadow-sm bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                    <div class="text-gray-400 flex items-center justify-center pl-4 pr-2">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input
+                        class="flex w-full min-w-0 flex-1 bg-transparent text-slate-900 dark:text-white focus:outline-0 placeholder:text-gray-400 text-base font-normal leading-normal h-full rounded-r-xl"
+                        placeholder="Buscar placa ou data..." value="" />
+                </div>
+            </label>
+        </div>
+        <!-- Stats -->
+        <div class="flex gap-3 px-4 pb-2">
+            <div
+                class="flex flex-1 flex-col gap-1 rounded-xl p-4 bg-primary text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+                <div class="absolute right-0 top-0 p-3 opacity-20">
+                    <span class="material-symbols-outlined text-5xl">login</span>
+                </div>
+                <p class="text-primary-100 text-sm font-medium leading-normal z-10">Entradas Hoje</p>
+                <p class="text-white tracking-tight text-2xl font-bold leading-tight z-10">145</p>
+            </div>
+            <div
+                class="flex flex-1 flex-col gap-1 rounded-xl p-4 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
+                <div class="absolute right-0 top-0 p-3 text-gray-400 opacity-20">
+                    <span class="material-symbols-outlined text-5xl">logout</span>
+                </div>
+                <p class="text-slate-500 dark:text-gray-400 text-sm font-medium leading-normal z-10">Saídas Hoje</p>
+                <p class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight z-10">132</p>
+            </div>
+        </div>
+        <!-- Chips -->
+        <div class="flex gap-2 px-4 py-2 overflow-x-auto no-scrollbar">
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-900 dark:bg-white px-5 transition-transform active:scale-95">
+                <p class="text-white dark:text-slate-900 text-sm font-semibold leading-normal">Todos</p>
+            </button>
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 transition-transform active:scale-95">
+                <p class="text-slate-600 dark:text-gray-300 text-sm font-medium leading-normal">Entradas</p>
+            </button>
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 transition-transform active:scale-95">
+                <p class="text-slate-600 dark:text-gray-300 text-sm font-medium leading-normal">Saídas</p>
+            </button>
+        </div>
+        <!-- List Section: Hoje -->
+        <div class="flex flex-col pb-4">
+            <!-- Section Header -->
+            <div class="flex items-center gap-4 px-4 py-4">
+                <h4 class="text-slate-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider">Hoje</h4>
+                <div class="h-px bg-gray-200 dark:bg-gray-800 flex-1"></div>
+            </div>
+            <!-- List Items -->
+            <div class="px-4 flex flex-col gap-3">
+                <!-- Item 1: Entry -->
+                <div
+                    class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">arrow_downward</span>
+                    </div>
+                    <div class="flex flex-col flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">ABC-1234</h3>
+                            <span
+                                class="text-slate-500 dark:text-gray-400 text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">14:32</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-slate-500 dark:text-gray-400 text-sm truncate pr-2">Entregador - Mercado
+                                Livre</p>
+                            <span class="text-xs font-semibold text-primary">Entrada</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item 2: Exit -->
+                <div
+                    class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-500"></div>
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-orange-500">
+                        <span class="material-symbols-outlined">arrow_upward</span>
+                    </div>
+                    <div class="flex flex-col flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">XYZ-9876</h3>
+                            <span
+                                class="text-slate-500 dark:text-gray-400 text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">13:15</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-slate-500 dark:text-gray-400 text-sm truncate pr-2">Visitante - Apt 402</p>
+                            <span class="text-xs font-semibold text-orange-500">Saída</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item 3: Entry -->
+                <div
+                    class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">arrow_downward</span>
+                    </div>
+                    <div class="flex flex-col flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">BMW-2024</h3>
+                            <span
+                                class="text-slate-500 dark:text-gray-400 text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">12:45</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-slate-500 dark:text-gray-400 text-sm truncate pr-2">Residente</p>
+                            <span class="text-xs font-semibold text-primary">Entrada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- List Section: Ontem -->
+        <div class="flex flex-col pb-20">
+            <!-- Section Header -->
+            <div class="flex items-center gap-4 px-4 py-4">
+                <h4 class="text-slate-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider">Ontem</h4>
+                <div class="h-px bg-gray-200 dark:bg-gray-800 flex-1"></div>
+            </div>
+            <!-- List Items -->
+            <div class="px-4 flex flex-col gap-3">
+                <!-- Item 4: Exit -->
+                <div
+                    class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-500"></div>
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-orange-500">
+                        <span class="material-symbols-outlined">arrow_upward</span>
+                    </div>
+                    <div class="flex flex-col flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">JKL-4567</h3>
+                            <span
+                                class="text-slate-500 dark:text-gray-400 text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">18:30</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-slate-500 dark:text-gray-400 text-sm truncate pr-2">Técnico de Internet</p>
+                            <span class="text-xs font-semibold text-orange-500">Saída</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item 5: Entry -->
+                <div
+                    class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+                    <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined">arrow_downward</span>
+                    </div>
+                    <div class="flex flex-col flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">JKL-4567</h3>
+                            <span
+                                class="text-slate-500 dark:text-gray-400 text-xs font-medium bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">14:15</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-slate-500 dark:text-gray-400 text-sm truncate pr-2">Técnico de Internet</p>
+                            <span class="text-xs font-semibold text-primary">Entrada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Floating Action Button (Optional for manual entry) -->
+        <div class="fixed bottom-6 right-6 z-20">
+            <button
+                class="flex items-center justify-center size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/40 hover:scale-105 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-3xl">add</span>
+            </button>
+        </div>
+        <!-- Bottom Safe Area Spacer -->
+        <div class="h-6 w-full"></div>
+    </div>
+</body>
+
+</html>
