@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Cadastro de Motorista</title>
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1e293b",
+                        "surface-light": "#ffffff",
+                        "border-dark": "#324467",
+                        "border-light": "#e2e8f0",
+                        "text-secondary-dark": "#94a3b8",
+                        "text-secondary-light": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-display antialiased">
+    <div
+        class="relative flex h-full min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+        <!-- Header -->
+        <div
+            class="sticky top-0 z-20 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-border-light dark:border-border-dark/30">
+            <div onclick="window.location.href='../dashboard/code.html'"
+                class="flex size-12 shrink-0 items-center justify-start text-gray-900 dark:text-white cursor-pointer">
+                <span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios</span>
+            </div>
+            <h2
+                class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Cadastro de Motorista</h2>
+            <div onclick="window.location.href='../dashboard/code.html'"
+                class="flex w-16 items-center justify-end cursor-pointer">
+                <p class="text-primary text-base font-semibold leading-normal tracking-[0.015em] shrink-0">Cancelar</p>
+            </div>
+        </div>
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto pb-32">
+            <!-- Photo Upload -->
+            <div class="flex flex-col items-center justify-center py-6">
+                <div class="relative group cursor-pointer">
+                    <div
+                        class="overflow-hidden w-28 h-28 rounded-full border-4 border-white dark:border-border-dark shadow-lg bg-gray-200 dark:bg-surface-dark flex items-center justify-center">
+                        <div class="w-full h-full bg-cover bg-center"
+                            data-alt="Portrait of a person representing the driver"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqFnpZTnb_89wnEGDKQZwHrnBFk-vvF-cV6xze-OINFxdl5i8YBXSOHR3N_m6MrgorW7VvSAFmB7a7dbYVc8Mi_kQszMEDoJOawHJ-NRSmqTrEOBpsNlrhQDuOo0AvvAieZ_wudGUl5gG19IDTA14PKtdxGHEVPiGOVL_N3Y3Lw0MpCIhGMdQWNfx3ObEiUPZuUrkAxim-qp8c-22uDtNXnwnz42TFdPsb2nC-zjeIVUjUGzosHduj-mQZj36RKoq8aCjwKp6rMIAx');">
+                        </div>
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 border-4 border-background-light dark:border-background-dark flex items-center justify-center shadow-md transition-transform transform group-hover:scale-110">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">photo_camera</span>
+                    </div>
+                </div>
+                <p class="mt-3 text-sm font-medium text-primary cursor-pointer">Alterar foto</p>
+            </div>
+            <!-- Section: Dados Pessoais -->
+            <div class="px-4 pb-2">
+                <h3 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3 pt-2">
+                    Dados Pessoais</h3>
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Nome Completo
+                        </p>
+                        <input
+                            class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
+                            placeholder="Ex: João da Silva" value="" />
+                    </label>
+                    <div class="flex gap-4">
+                        <label class="flex flex-col w-1/2">
+                            <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">CPF</p>
+                            <input
+                                class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
+                                placeholder="000.000.000-00" value="" />
+                        </label>
+                        <label class="flex flex-col w-1/2">
+                            <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Celular</p>
+                            <input
+                                class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
+                                placeholder="(00) 00000-0000" type="tel" value="" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="h-px bg-border-light dark:bg-border-dark mx-4 my-6"></div>
+            <!-- Section: Documentação -->
+            <div class="px-4 pb-2">
+                <h3 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3">
+                    Documentação (CNH)</h3>
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col w-full">
+                        <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Nº Registro</p>
+                        <input
+                            class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
+                            placeholder="00000000000" type="number" value="" />
+                    </label>
+                    <div class="flex gap-4">
+                        <label class="flex flex-col w-1/3">
+                            <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Categoria
+                            </p>
+                            <div class="relative">
+                                <select
+                                    class="form-select flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 pl-4 pr-8 text-base font-normal appearance-none transition-all cursor-pointer">
+                                    <option>B</option>
+                                    <option>A</option>
+                                    <option>AB</option>
+                                    <option>C</option>
+                                    <option>D</option>
+                                    <option>E</option>
+                                </select>
+                                <!-- Custom arrow icon -->
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                    <span class="material-symbols-outlined">expand_more</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="flex flex-col w-2/3">
+                            <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Validade
+                            </p>
+                            <div class="relative">
+                                <input
+                                    class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all [color-scheme:light] dark:[color-scheme:dark]"
+                                    type="date" value="" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="h-px bg-border-light dark:bg-border-dark mx-4 my-6"></div>
+            <!-- Section: Veículos -->
+            <div class="px-4 pb-4">
+                <div class="flex items-center justify-between pb-3">
+                    <h3 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+                        Veículos Associados</h3>
+                    <button class="text-primary text-sm font-semibold flex items-center gap-1 active:opacity-70">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">add_circle</span>
+                        Adicionar
+                    </button>
+                </div>
+                <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-4">
+                    Selecione os veículos que este motorista está autorizado a conduzir.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <!-- Vehicle Chip 1 -->
+                    <div
+                        class="flex items-center gap-2 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full pl-3 pr-2 py-1.5 shadow-sm">
+                        <div class="flex flex-col">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white">Fiat Toro</span>
+                            <span
+                                class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase">ABC-1234</span>
+                        </div>
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/30 dark:hover:text-red-400 transition-colors">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">close</span>
+                        </button>
+                    </div>
+                    <!-- Vehicle Chip 2 -->
+                    <div
+                        class="flex items-center gap-2 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full pl-3 pr-2 py-1.5 shadow-sm">
+                        <div class="flex flex-col">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white">VW Gol</span>
+                            <span
+                                class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase">XYZ-9876</span>
+                        </div>
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/30 dark:hover:text-red-400 transition-colors">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">close</span>
+                        </button>
+                    </div>
+                    <!-- Add Button Chip -->
+                    <button
+                        class="flex items-center justify-center gap-2 border border-dashed border-primary/50 hover:border-primary bg-primary/5 dark:bg-primary/10 rounded-full px-4 py-2 transition-colors group">
+                        <span class="text-xs font-medium text-primary group-hover:text-primary-600">Vincular
+                            Veículo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Sticky Footer -->
+        <div
+            class="fixed bottom-0 left-0 right-0 z-30 p-4 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark/30 pb-safe">
+            <button
+                class="w-full h-14 bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all rounded-xl text-white font-bold text-base shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">check</span>
+                Salvar Cadastro
+            </button>
+        </div>
+    </div>
+    <!-- Helper CSS for safe area padding on iPhone -->
+    <style>
+        .pb-safe {
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #324467;
+            border-radius: 3px;
+        }
+    </style>
+</body>
+
+</html>
