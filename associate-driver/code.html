@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Associar Motorista ao Veículo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- TopAppBar -->
+        <header
+            class="flex items-center justify-between bg-white dark:bg-[#111722] p-4 shadow-sm dark:shadow-none z-10 sticky top-0">
+            <button onclick="window.location.href='../dashboard/code.html'"
+                class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+            </button>
+            <h1 class="text-lg font-bold leading-tight tracking-[-0.015em] text-slate-900 dark:text-white">Associar
+                Motorista</h1>
+            <div class="size-10"></div> <!-- Spacer for centering -->
+        </header>
+        <main class="flex-1 flex flex-col p-4 pb-24 gap-6">
+            <!-- Vehicle Selection Section -->
+            <section class="flex flex-col gap-3">
+                <h2 class="text-slate-900 dark:text-white tracking-tight text-xl font-bold leading-tight">Veículo</h2>
+                <div class="relative">
+                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Selecione o veículo
+                        alvo</label>
+                    <div class="relative">
+                        <select
+                            class="appearance-none w-full bg-white dark:bg-[#192233] border border-slate-200 dark:border-[#324467] text-slate-900 dark:text-white rounded-xl py-3.5 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base">
+                            <option disabled="" selected="" value="">Escolha um veículo...</option>
+                            <option value="1">ABC-1234 • Ford Transit (Branca)</option>
+                            <option value="2">XYZ-9876 • Renault Master (Prata)</option>
+                            <option value="3">JKL-4567 • Fiat Ducato (Branca)</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Selected Vehicle Info Card (Conditional) -->
+                <div class="mt-2 bg-primary/10 border border-primary/20 rounded-xl p-4 flex items-start gap-4">
+                    <div class="bg-primary/20 h-12 w-12 rounded-lg flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary">local_shipping</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-primary">Veículo Selecionado</p>
+                        <p class="text-slate-900 dark:text-white font-bold text-lg">Ford Transit</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Placa: <span
+                                class="text-slate-700 dark:text-slate-300 font-mono font-medium">ABC-1234</span></p>
+                    </div>
+                </div>
+            </section>
+            <!-- Driver Selection Section -->
+            <section class="flex flex-col gap-3 flex-1">
+                <div class="flex items-end justify-between">
+                    <h2 class="text-slate-900 dark:text-white tracking-tight text-xl font-bold leading-tight">Motoristas
+                    </h2>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">2 Selecionados</span>
+                </div>
+                <!-- Search Bar -->
+                <div class="relative group">
+                    <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input
+                        class="block w-full rounded-xl border-none bg-white dark:bg-[#232f48] py-3 pl-10 pr-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary shadow-sm"
+                        placeholder="Buscar por nome ou CPF..." type="text" />
+                </div>
+                <!-- Driver List -->
+                <div class="flex flex-col gap-2 mt-2">
+                    <!-- Driver Item 1 (Selected) -->
+                    <label
+                        class="cursor-pointer group relative flex items-center justify-between p-3 rounded-xl bg-white dark:bg-[#192233] border-2 border-primary shadow-sm transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+                                <img alt="Motorista" class="h-full w-full object-cover"
+                                    data-alt="Portrait of a smiling man with glasses"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzcPbSo2O3dBGDX2L36ejuAEvuAlUjGEfbM4zSmvb0da76V_hFdF-2XFQjFEHMn7pUU-pK7Axg6f4qMvsthdx7r-NH7TXxW3YjVkdMRUvcNQzBvgo9c7nCFk7pc0vsFqdE_8SQ4pZTQL7Y-LJPjgKg_pzAFtJk-trWiY5I_4F8Obj_zkz1PYXydd0URuvfxyEEC0wTAoT2e_xnXLp3Nd0XEEKHjPwmgLv1tEmuSfU65OGNdImHVEJ8EO0zQdLCQNOgSWUsU_kyczOy" />
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Carlos Silva</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">CPF: 123.***.***-00</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <input checked=""
+                                class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5 bg-slate-100 dark:bg-slate-800 dark:border-slate-600"
+                                type="checkbox" />
+                        </div>
+                    </label>
+                    <!-- Driver Item 2 (Unselected) -->
+                    <label
+                        class="cursor-pointer group relative flex items-center justify-between p-3 rounded-xl bg-white dark:bg-[#192233] border border-transparent hover:border-slate-300 dark:hover:border-slate-600 shadow-sm transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+                                <img alt="Motorista" class="h-full w-full object-cover"
+                                    data-alt="Portrait of a woman smiling"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk4pVg47tBmaU7ekYm-g7Fd0QBVy8PW6EqmVZkaJIN4AAmKZxMyILmTMaKCj9X1EMbcKAoDjd76JgHqs2yj8jWX5sHwCWA4Q5f9fq_5u-EDpuvZ0YE8M6glwxOpfpIbA3qV2-BoCms8sO6zR8bFJ2FNzGYO4Ld81XuZppy7yklXKU4nWoSV-fpREAjGfHJhjfKVFoR35HaPTmtoEE0QRDhf0FPt4riTQnkOjS0aEr08taSdvkzZ7PYuYF09cr8KPc0AS6LwyuHqAGF" />
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Ana Oliveira</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">CPF: 987.***.***-11</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5 bg-slate-100 dark:bg-slate-800 dark:border-slate-600"
+                                type="checkbox" />
+                        </div>
+                    </label>
+                    <!-- Driver Item 3 (Selected) -->
+                    <label
+                        class="cursor-pointer group relative flex items-center justify-between p-3 rounded-xl bg-white dark:bg-[#192233] border-2 border-primary shadow-sm transition-all">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0 flex items-center justify-center text-slate-500 font-bold text-xs">
+                                RM
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Roberto Mendes</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">CPF: 456.***.***-22</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <input checked=""
+                                class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5 bg-slate-100 dark:bg-slate-800 dark:border-slate-600"
+                                type="checkbox" />
+                        </div>
+                    </label>
+                    <!-- Driver Item 4 (Unselected) -->
+                    <label
+                        class="cursor-pointer group relative flex items-center justify-between p-3 rounded-xl bg-white dark:bg-[#192233] border border-transparent hover:border-slate-300 dark:hover:border-slate-600 shadow-sm transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+                                <img alt="Motorista" class="h-full w-full object-cover"
+                                    data-alt="Portrait of a young man smiling"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC60uVyzS1Gsjktsb40_74Y3sMkKxmacrnMpY_6wg6U4p4FBHzUAXdjEi4hhovrCIajA94vmxvJUe9rNZHtEou1x8slpQGLDvXG2Fla0mTJPwr6gihXyzZiHpo4x1T_Dwg5xaFZGX_0-sfBduNqtuQ_NKYD0Ag7IGtcj8N2V99YI_pRn1s5oOXXJ2n-PKYPxdT4BnXMfUKnqCVRfsZoqw6F7km0rIYI9Qcft1L46skrept6_YkOSWlRsAAd3EBmx0EDs4iVH8azLsSW" />
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Lucas Santos</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">CPF: 321.***.***-33</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="rounded border-slate-300 text-primary focus:ring-primary h-5 w-5 bg-slate-100 dark:bg-slate-800 dark:border-slate-600"
+                                type="checkbox" />
+                        </div>
+                    </label>
+                </div>
+            </section>
+        </main>
+        <!-- Fixed Bottom Action Bar -->
+        <div
+            class="fixed bottom-0 left-0 w-full p-4 bg-white/80 dark:bg-[#111722]/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-20">
+            <button
+                class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-transform active:scale-[0.98] flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">link</span>
+                Salvar Associação
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
