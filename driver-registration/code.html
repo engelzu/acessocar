@@ -101,20 +101,20 @@
                     <label class="flex flex-col w-full">
                         <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Nome Completo
                         </p>
-                        <input
+                        <input id="driverName"
                             class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
                             placeholder="Ex: João da Silva" value="" />
                     </label>
                     <div class="flex gap-4">
                         <label class="flex flex-col w-1/2">
                             <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">CPF</p>
-                            <input
+                            <input id="driverCpf"
                                 class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
                                 placeholder="000.000.000-00" value="" />
                         </label>
                         <label class="flex flex-col w-1/2">
                             <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Celular</p>
-                            <input
+                            <input id="driverPhone"
                                 class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
                                 placeholder="(00) 00000-0000" type="tel" value="" />
                         </label>
@@ -129,7 +129,7 @@
                 <div class="flex flex-col gap-4">
                     <label class="flex flex-col w-full">
                         <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Nº Registro</p>
-                        <input
+                        <input id="cnhRegister"
                             class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all"
                             placeholder="00000000000" type="number" value="" />
                     </label>
@@ -138,7 +138,7 @@
                             <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Categoria
                             </p>
                             <div class="relative">
-                                <select
+                                <select id="cnhCategory"
                                     class="form-select flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 pl-4 pr-8 text-base font-normal appearance-none transition-all cursor-pointer">
                                     <option>B</option>
                                     <option>A</option>
@@ -158,7 +158,7 @@
                             <p class="text-gray-700 dark:text-white text-sm font-medium leading-normal pb-2">Validade
                             </p>
                             <div class="relative">
-                                <input
+                                <input id="cnhValidity"
                                     class="form-input flex w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-surface-dark text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary h-12 px-4 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark text-base font-normal transition-all [color-scheme:light] dark:[color-scheme:dark]"
                                     type="date" value="" />
                             </div>
