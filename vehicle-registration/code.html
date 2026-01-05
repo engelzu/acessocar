@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Cadastro de Veículo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "primary-dark": "#0f4bc4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1e293b",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar hiding */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display antialiased min-h-screen flex flex-col items-center justify-center p-0 sm:p-4">
+    <!-- Mobile Container -->
+    <div
+        class="w-full max-w-[420px] bg-background-light dark:bg-background-dark h-full min-h-screen sm:min-h-[844px] sm:h-auto sm:rounded-[3rem] sm:border-[8px] sm:border-gray-900 overflow-hidden relative shadow-2xl flex flex-col">
+        <!-- Status Bar Area (Visual) -->
+        <div
+            class="h-12 w-full bg-background-light dark:bg-background-dark flex items-end justify-between px-6 pb-2 sm:hidden">
+            <span class="text-xs font-semibold dark:text-white">9:41</span>
+            <div class="flex gap-1.5">
+                <span class="material-symbols-outlined text-[18px] dark:text-white">signal_cellular_alt</span>
+                <span class="material-symbols-outlined text-[18px] dark:text-white">wifi</span>
+                <span class="material-symbols-outlined text-[18px] dark:text-white">battery_full</span>
+            </div>
+        </div>
+        <!-- Header -->
+        <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between z-10">
+            <button onclick="window.location.href='../dashboard/code.html'"
+                class="text-gray-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined">arrow_back_ios_new</span>
+            </button>
+            <h2
+                class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">
+                Novo Veículo</h2>
+            <div class="hidden w-10 items-center justify-end">
+                <p class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0">Ajuda</p>
+            </div>
+        </div>
+        <!-- Main Scrollable Content -->
+        <div class="flex-1 overflow-y-auto no-scrollbar pb-24">
+            <!-- Vehicle Type Segmented Control -->
+            <div class="px-4 py-4">
+                <p class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal pb-2 ml-1">Tipo de Veículo
+                </p>
+                <div class="flex h-12 w-full items-center justify-center rounded-xl bg-gray-200 dark:bg-[#232f48] p-1">
+                    <label
+                        class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#111722] has-[:checked]:shadow-sm transition-all duration-200">
+                        <span
+                            class="material-symbols-outlined text-[20px] mr-2 text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-primary dark:group-has-[:checked]:text-white">directions_car</span>
+                        <span
+                            class="truncate text-sm font-medium text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-gray-900 dark:group-has-[:checked]:text-white">Carro</span>
+                        <input checked="" class="invisible w-0 h-0 absolute" name="vehicle_type" type="radio"
+                            value="Carro" />
+                    </label>
+                    <label
+                        class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#111722] has-[:checked]:shadow-sm transition-all duration-200">
+                        <span
+                            class="material-symbols-outlined text-[20px] mr-2 text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-primary dark:group-has-[:checked]:text-white">two_wheeler</span>
+                        <span
+                            class="truncate text-sm font-medium text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-gray-900 dark:group-has-[:checked]:text-white">Moto</span>
+                        <input class="invisible w-0 h-0 absolute" name="vehicle_type" type="radio" value="Moto" />
+                    </label>
+                    <label
+                        class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#111722] has-[:checked]:shadow-sm transition-all duration-200">
+                        <span
+                            class="material-symbols-outlined text-[20px] mr-2 text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-primary dark:group-has-[:checked]:text-white">local_shipping</span>
+                        <span
+                            class="truncate text-sm font-medium text-gray-500 dark:text-[#92a4c9] group-has-[:checked]:text-gray-900 dark:group-has-[:checked]:text-white">Caminhão</span>
+                        <input class="invisible w-0 h-0 absolute" name="vehicle_type" type="radio" value="Caminhão" />
+                    </label>
+                </div>
+            </div>
+            <!-- License Plate Input -->
+            <div class="px-4 py-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-2 ml-1">Placa do
+                        Veículo</p>
+                    <div class="relative">
+                        <input
+                            class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-xl bg-white dark:bg-[#232f48] border border-gray-200 dark:border-gray-800 focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary h-14 placeholder:text-gray-400 dark:placeholder:text-[#92a4c9] px-4 text-lg font-semibold tracking-wide uppercase leading-normal text-gray-900 dark:text-white transition-all"
+                            placeholder="ABC-1234" value="" />
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2">
+                            <span class="material-symbols-outlined text-gray-400">subtitles</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1.5 ml-1">Formatos aceitos: Padrão antigo ou Mercosul.</p>
+                </label>
+            </div>
+            <!-- Model Input -->
+            <div class="px-4 py-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-2 ml-1">Modelo e
+                        Marca</p>
+                    <input
+                        class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-xl bg-white dark:bg-[#232f48] border border-gray-200 dark:border-gray-800 focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary h-14 placeholder:text-gray-400 dark:placeholder:text-[#92a4c9] px-4 text-base font-normal leading-normal text-gray-900 dark:text-white transition-all"
+                        placeholder="Ex: Fiat Uno Vivace" value="" />
+                </label>
+            </div>
+            <!-- Color Selection -->
+            <div class="px-4 py-4">
+                <p class="text-gray-900 dark:text-white text-base font-medium leading-normal pb-3 ml-1">Cor Principal
+                </p>
+                <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+                    <!-- White -->
+                    <label class="relative group cursor-pointer">
+                        <input checked="" class="peer sr-only" name="color" type="radio" value="white" />
+                        <div
+                            class="w-10 h-10 rounded-full bg-white border border-gray-300 shadow-sm peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-primary dark:peer-checked:ring-offset-background-dark">
+                        </div>
+                    </label>
+                    <!-- Silver -->
+                    <label class="relative group cursor-pointer">
+                        <input class="peer sr-only" name="color" type="radio" value="silver" />
+                        <div
+                            class="w-10 h-10 rounded-full bg-gray-300 border border-transparent peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-primary dark:peer-checked:ring-offset-background-dark">
+                        </div>
+                    </label>
+                    <!-- Black -->
+                    <label class="relative group cursor-pointer">
+                        <input class="peer sr-only" name="color" type="radio" value="black" />
+                        <div
+                            class="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-primary dark:peer-checked:ring-offset-background-dark">
+                        </div>
+                    </label>
+                    <!-- Red -->
+                    <label class="relative group cursor-pointer">
+                        <input class="peer sr-only" name="color" type="radio" value="red" />
+                        <div
+                            class="w-10 h-10 rounded-full bg-red-600 border border-transparent peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-primary dark:peer-checked:ring-offset-background-dark">
+                        </div>
+                    </label>
+                    <!-- Blue -->
+                    <label class="relative group cursor-pointer">
+                        <input class="peer sr-only" name="color" type="radio" value="blue" />
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-600 border border-transparent peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-primary dark:peer-checked:ring-offset-background-dark">
+                        </div>
+                    </label>
+                    <!-- Custom -->
+                    <label class="relative group cursor-pointer">
+                        <div
+                            class="w-10 h-10 rounded-full bg-transparent border-2 border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-sm text-gray-500">add</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <!-- Driver Section -->
+            <div class="px-4 py-2 mt-2">
+                <div
+                    class="rounded-xl bg-white dark:bg-[#1e293b] p-4 flex items-center justify-between shadow-sm border border-gray-100 dark:border-gray-800">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-gray-500 dark:text-gray-300">person</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">Motorista Principal</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Nenhum selecionado</p>
+                        </div>
+                    </div>
+                    <button class="text-sm font-semibold text-primary hover:text-primary-dark">Adicionar</button>
+                </div>
+            </div>
+        </div>
+        <!-- Sticky Bottom Action -->
+        <div
+            class="absolute bottom-0 w-full bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 p-4 pb-8 sm:pb-4 z-20">
+            <button
+                class="w-full h-14 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-bold text-lg rounded-xl shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
+                <span>Cadastrar Veículo</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+        <!-- Success Modal Overlay (Simulated as "Hidden" or bottom preview for the demo) 
+             In a real app, this would be a separate view or a modal overlaid on top.
+             I will render it as a "Result Card" floating at the bottom to show the design requirement visually without interactivity.
+        -->
+        <!-- 
+        <div class="absolute inset-x-0 bottom-0 z-50 bg-background-dark rounded-t-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] transform transition-transform duration-300 translate-y-full">
+            ... content ...
+        </div> 
+        -->
+        <!-- Visible Representation of the Success State (For Design Purposes) -->
+        <div class="absolute inset-0 bg-black/60 z-40 backdrop-blur-sm hidden"></div> <!-- Toggle hidden to view -->
+        <!-- To satisfy the user request for the QR code, I will place a "Recent Registration" card *behind* the main content area in the code, 
+             or simply assume the user clicks "Cadastrar" and sees the following modal. 
+             Since I can't add JS, I will render this static modal as if it just popped up over the form. 
+             UNCOMMENT the div below to see the Success State or view it as an overlay.
+             
+             *DECISION*: I will render the success modal as a visible overlay to show the "After cadastro" state requested.
+        -->
+        <div class="absolute inset-0 z-50 flex items-end sm:items-center justify-center pointer-events-none">
+            <!-- Backdrop (Visual Only) -->
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+            <!-- Modal Content -->
+            <div
+                class="pointer-events-auto w-full max-w-[380px] bg-background-light dark:bg-[#1e293b] rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl transform transition-all animate-in slide-in-from-bottom-10 fade-in duration-300 m-0 sm:m-4">
+                <!-- Handle for mobile sheet -->
+                <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6 sm:hidden"></div>
+                <div class="flex flex-col items-center text-center">
+                    <div
+                        class="size-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
+                        <span
+                            class="material-symbols-outlined text-3xl text-green-600 dark:text-green-400">check_circle</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Veículo Cadastrado!</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">O acesso foi gerado com sucesso.</p>
+                    <!-- QR Code Card -->
+                    <div class="bg-white p-4 rounded-2xl shadow-sm mb-6 w-full max-w-[240px]">
+                        <div class="aspect-square bg-white w-full relative overflow-hidden rounded-lg mb-3"
+                            data-alt="QR Code for vehicle entry"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpwFQYlhldIBtjup5DmKlcuoDpqMS7A_7-8RhJn5gMOzt1sgj4Rwbk84x5tmd3diaTX-5qafVdwFwM3UJ8yYUDj52-G6amLuM-k-liaFS-_RuUaMSxi3zx0P3kLh0TTZclGDw3QjJt5zwha89gI39kDnHW5dCsTFst8D8_ohkraJ3ZlwKN62yuRDAHu0LR_9oGZ0F4hfPJf-8hRSJar-HYnL9BrYdXBPAFApXt5ve1lz_aZFPgjOyyycXpZF9Tgg744fMpx1qhPBVc'); background-size: cover;">
+                        </div>
+                        <div class="flex flex-col items-center border-t border-dashed border-gray-200 pt-3">
+                            <span class="text-[10px] uppercase tracking-wider text-gray-400 font-bold">ID Único</span>
+                            <span class="text-lg font-mono font-bold text-gray-900 tracking-widest">#V-8291</span>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex gap-3 w-full">
+                        <button
+                            class="flex-1 h-12 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium text-sm transition-colors">
+                            Fechar
+                        </button>
+                        <button
+                            class="flex-1 h-12 rounded-xl bg-primary hover:bg-primary-dark text-white font-medium text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">share</span>
+                            Compartilhar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
