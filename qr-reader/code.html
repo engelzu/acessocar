@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Leitor QR Code - Entrada/Saída</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark min-h-screen font-display antialiased selection:bg-primary/30 text-slate-900 dark:text-white">
+    <div class="relative flex flex-col h-screen w-full overflow-hidden max-w-md mx-auto shadow-2xl bg-black">
+        <!-- Header Overlay -->
+        <div class="absolute top-0 left-0 right-0 z-20 pt-12 pb-4 px-4 bg-gradient-to-b from-black/80 to-transparent">
+            <div class="flex items-center justify-between">
+                <button onclick="window.location.href='../dashboard/code.html'"
+                    class="flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-colors">
+                    <span class="material-symbols-outlined text-xl">arrow_back</span>
+                </button>
+                <h2 class="text-white text-lg font-bold tracking-tight">Leitor de Acesso</h2>
+                <button
+                    class="flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-colors">
+                    <span class="material-symbols-outlined text-xl">settings</span>
+                </button>
+            </div>
+        </div>
+        <!-- Camera Viewfinder Area (Simulated) -->
+        <div class="relative flex-1 bg-gray-900 flex flex-col items-center justify-center overflow-hidden">
+            <!-- Background Image simulating camera feed -->
+            <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-60"
+                data-alt="Blurred view of a parking garage through a camera lens"
+                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYmrX8ZFnyUh54Mm5JcJLdobBfLL4viLbQrIjGc8GbBjIdm489CqY5qOh0qwbJePl5RTOUKv9dinrwbgKnqV1-zKxeoLkSWWG6aq6S5BgP17CxN0eAOlijMQPAXlJGWLtv772GdBFeN7mJsZSglXw2v3tv8k907-zAQerESzF5pAUoTk9Z48zIoVUBjPWn8Ej2XIPctRJXAz8XVYkQ08RmJpsVBw0b3_Ey2eX4ISa0so4mWgu9htbV7asbCqUw87CZ6ItrqChKFNXx');">
+            </div>
+            <!-- Scanning Frame Overlay -->
+            <div
+                class="relative z-10 size-64 border-2 border-primary/50 rounded-3xl bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center">
+                <!-- Corner Markers -->
+                <div
+                    class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary -mt-1 -ml-1 rounded-tl-xl">
+                </div>
+                <div
+                    class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary -mt-1 -mr-1 rounded-tr-xl">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary -mb-1 -ml-1 rounded-bl-xl">
+                </div>
+                <div
+                    class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary -mb-1 -mr-1 rounded-br-xl">
+                </div>
+                <!-- Scanning Animation Line -->
+                <div
+                    class="w-full h-0.5 bg-primary shadow-[0_0_15px_rgba(19,91,236,0.8)] animate-[scan_2s_ease-in-out_infinite]">
+                </div>
+            </div>
+            <!-- Hint Text -->
+            <div class="absolute bottom-24 z-20 w-full text-center px-6">
+                <div
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
+                    <span class="material-symbols-outlined text-primary text-sm">qr_code_scanner</span>
+                    <p class="text-white/90 text-sm font-medium">Aponte para o QR Code do veículo</p>
+                </div>
+            </div>
+            <!-- Camera Controls -->
+            <div class="absolute bottom-6 z-20 flex items-center gap-6">
+                <button
+                    class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-black/60 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">image</span>
+                </button>
+                <button
+                    class="flex shrink-0 items-center justify-center rounded-full size-16 bg-white text-primary shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-3xl">camera</span>
+                </button>
+                <button
+                    class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-black/60 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">flash_on</span>
+                </button>
+            </div>
+        </div>
+        <!-- Result/Action Sheet (Slide Up Panel) -->
+        <div
+            class="bg-background-light dark:bg-[#1a202c] rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.4)] z-30 pb-6 transition-transform duration-300">
+            <!-- Drag Handle -->
+            <div class="w-full flex justify-center pt-3 pb-1">
+                <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+            </div>
+            <div class="px-5 pt-2 pb-6 space-y-5">
+                <!-- Status Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Veículo Identificado</h3>
+                        <div class="flex items-center gap-2 mt-0.5">
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">ABC-1234</span>
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">LIBERADO</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-500 dark:text-gray-400">Data e Hora</div>
+                        <div class="text-sm font-mono font-medium text-gray-700 dark:text-gray-200">12/10 • 14:35</div>
+                    </div>
+                </div>
+                <!-- Segmented Control (Entrada/Saída) -->
+                <div class="bg-gray-200 dark:bg-[#111722] p-1 rounded-xl flex relative">
+                    <label class="flex-1 cursor-pointer">
+                        <input checked="" class="peer sr-only" name="access_type" type="radio" value="entry" />
+                        <div
+                            class="py-2.5 text-center text-sm font-medium rounded-lg text-gray-500 dark:text-gray-400 transition-all peer-checked:bg-white dark:peer-checked:bg-[#232f48] peer-checked:text-primary peer-checked:shadow-sm">
+                            Entrada
+                        </div>
+                    </label>
+                    <label class="flex-1 cursor-pointer">
+                        <input class="peer sr-only" name="access_type" type="radio" value="exit" />
+                        <div
+                            class="py-2.5 text-center text-sm font-medium rounded-lg text-gray-500 dark:text-gray-400 transition-all peer-checked:bg-white dark:peer-checked:bg-[#232f48] peer-checked:text-primary peer-checked:shadow-sm">
+                            Saída
+                        </div>
+                    </label>
+                </div>
+                <!-- Observation Input -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-medium text-gray-500 dark:text-gray-400 ml-1" for="obs">Observação
+                        (Opcional)</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-gray-400 text-lg">edit_note</span>
+                        </div>
+                        <input
+                            class="block w-full pl-10 pr-3 py-3 text-sm rounded-xl border-none bg-white dark:bg-[#111722] text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:focus:ring-primary sm:leading-6"
+                            id="obs" placeholder="Ex: Visitante, Entrega..." type="text" />
+                    </div>
+                </div>
+                <!-- Submit Button -->
+                <button
+                    class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/20 hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors"
+                    type="button">
+                    <span class="material-symbols-outlined text-xl">check_circle</span>
+                    Confirmar Registro
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Animation Keyframes for Scanner -->
+    <style>
+        @keyframes scan {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(250px);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+        }
+    </style>
+</body>
+
+</html>
