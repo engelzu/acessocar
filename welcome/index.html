@@ -87,7 +87,7 @@
             <!-- Actions -->
             <div class="flex flex-col gap-3 w-full">
                 <!-- Primary Button -->
-                <button onclick="window.location.href='../login/code.html'"
+                <button onclick="window.location.href='../login/index.html'"
                     class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary hover:bg-blue-600 transition-colors text-white text-base font-bold leading-normal tracking-wide shadow-lg shadow-blue-900/20">
                     <span class="truncate">Acessar Sistema</span>
                     <span class="material-symbols-outlined ml-2 text-[20px]">arrow_forward</span>
@@ -105,7 +105,7 @@
                 function checkAdminAccess() {
                     const password = prompt("Digite a senha de administrador:");
                     if (password === "789512") {
-                        window.location.href = '../user-registration/code.html';
+                        window.location.href = '../user-registration/index.html';
                     } else if (password !== null) {
                         alert("Senha incorreta!");
                     }
