@@ -185,23 +185,39 @@
 
             0%,
             100% {
-                transform: translateY(0);
-                opacity: 0;
+
+                0%,
+                100% {
+                    transform: translateY(0);
+                    opacity: 0;
+                }
+
+                10% {
+                    opacity: 1;
+                }
+
+                50% {
+                    transform: translateY(250px);
+                    opacity: 1;
+                }
+
+                90% {
+                    opacity: 1;
+                }
             }
 
-            10% {
-                opacity: 1;
+            /* Ensure video fills container */
+            #reader {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
             }
 
-            50% {
-                transform: translateY(250px);
-                opacity: 1;
+            #reader video {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
             }
-
-            90% {
-                opacity: 1;
-            }
-        }
     </style>
 
     <script>
@@ -210,17 +226,36 @@
 
         function startScanner() {
             html5QrcodeScanner = new Html5Qrcode("reader");
-            // Increased qrbox size for better detection
-            // Added formatsToSupport for potentially faster detection (only QR)
+
+            // Config for full screen scanning
             const config = {
                 fps: 10,
-                qrbox: { width: 300, height: 300 },
-                aspectRatio: 1.0,
+                // Dynamically calculate qrbox to be about 70% of the smaller dimension
+                qrbox: (viewfinderWidth, viewfinderHeight) => {
+                    const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+                    return {
+                        width: Math.floor(minEdge * 0.7),
+                        height: Math.floor(minEdge * 0.7)
+                    };
+                },
+                experimentalFeatures: {
+                    useBarCodeDetectorIfSupported: true
+                },
                 formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE]
             };
 
-            // Prefer back camera
-            html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
+            // Prefer back camera ("environment")
+            html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+                .catch(err => {
+                    console.error("Error starting scanner", err);
+                    document.getElementById('reader').innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-white p-4 text-center">
+                        <span class="material-symbols-outlined text-4xl mb-2 text-red-500">videocam_off</span>
+                        <p>Não foi possível iniciar a câmera.</p>
+                        <p class="text-sm opacity-70 mt-2">${err}</p>
+                    </div>
+                `;
+                });
         }
 
         async function onScanSuccess(decodedText, decodedResult) {
