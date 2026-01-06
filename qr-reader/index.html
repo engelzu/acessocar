@@ -255,15 +255,21 @@
                     currentVehicle = { id: doc.id, ...doc.data() };
 
                     // 2. Fetch Last Movement for Status
+                    // FIX: Sorting in JS to avoid creating a composite index in Firestore for where+orderBy
                     const historySnap = await db.collection('history')
                         .where('vehicleId', '==', currentVehicle.id)
-                        .orderBy('timestamp', 'desc')
-                        .limit(1)
                         .get();
 
                     lastMovementType = null;
                     if (!historySnap.empty) {
-                        lastMovementType = historySnap.docs[0].data().type;
+                        // Find latest by timestamp in client-side
+                        const docs = historySnap.docs.map(d => d.data());
+                        docs.sort((a, b) => {
+                            const tA = a.timestamp ? a.timestamp.seconds : 0;
+                            const tB = b.timestamp ? b.timestamp.seconds : 0;
+                            return tB - tA; // Descending (newest first)
+                        });
+                        lastMovementType = docs[0].type;
                     }
 
                     showResult(currentVehicle, lastMovementType);
