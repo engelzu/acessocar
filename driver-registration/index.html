@@ -236,21 +236,6 @@
     </div>
 
     <script>
-        // Add IDs to inputs for easy access
-        const inputs = document.querySelectorAll('input, select');
-        // Name
-        inputs[0].id = 'driverName';
-        // CPF
-        inputs[1].id = 'driverCpf';
-        // Phone
-        inputs[2].id = 'driverPhone';
-        // CNH Register
-        inputs[3].id = 'cnhRegister';
-        // CNH Category
-        document.querySelector('select').id = 'cnhCategory';
-        // CNH Validity
-        inputs[4].id = 'cnhValidity';
-
         document.getElementById('saveDriverBtn').addEventListener('click', async () => {
             const btn = document.getElementById('saveDriverBtn');
             const originalText = btn.innerHTML;
