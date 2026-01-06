@@ -10,9 +10,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+
+    <!-- HTML5-QRCode Library -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -50,6 +51,11 @@
         body {
             min-height: max(884px, 100dvh);
         }
+
+        #reader video {
+            object-fit: cover !important;
+            border-radius: 12px;
+        }
     </style>
 </head>
 
@@ -70,61 +76,48 @@
                 </button>
             </div>
         </div>
-        <!-- Camera Viewfinder Area (Simulated) -->
+
+        <!-- Camera Area -->
         <div class="relative flex-1 bg-gray-900 flex flex-col items-center justify-center overflow-hidden">
-            <!-- Background Image simulating camera feed -->
-            <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-60"
-                data-alt="Blurred view of a parking garage through a camera lens"
-                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYmrX8ZFnyUh54Mm5JcJLdobBfLL4viLbQrIjGc8GbBjIdm489CqY5qOh0qwbJePl5RTOUKv9dinrwbgKnqV1-zKxeoLkSWWG6aq6S5BgP17CxN0eAOlijMQPAXlJGWLtv772GdBFeN7mJsZSglXw2v3tv8k907-zAQerESzF5pAUoTk9Z48zIoVUBjPWn8Ej2XIPctRJXAz8XVYkQ08RmJpsVBw0b3_Ey2eX4ISa0so4mWgu9htbV7asbCqUw87CZ6ItrqChKFNXx');">
-            </div>
-            <!-- Scanning Frame Overlay -->
-            <div
-                class="relative z-10 size-64 border-2 border-primary/50 rounded-3xl bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center">
-                <!-- Corner Markers -->
+            <div id="reader" style="width: 100%; height: 100%;"></div>
+
+            <!-- Scanning Overlay (Visual Only) -->
+            <div id="scanOverlay"
+                class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center z-10">
                 <div
-                    class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary -mt-1 -ml-1 rounded-tl-xl">
+                    class="relative size-64 border-2 border-primary/50 rounded-3xl bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.7)] flex flex-col items-center justify-center">
+                    <!-- Corner Markers -->
+                    <div
+                        class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary -mt-1 -ml-1 rounded-tl-xl">
+                    </div>
+                    <div
+                        class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary -mt-1 -mr-1 rounded-tr-xl">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary -mb-1 -ml-1 rounded-bl-xl">
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary -mb-1 -mr-1 rounded-br-xl">
+                    </div>
+                    <!-- Animation -->
+                    <div
+                        class="w-full h-0.5 bg-primary shadow-[0_0_15px_rgba(19,91,236,0.8)] animate-[scan_2s_ease-in-out_infinite]">
+                    </div>
                 </div>
-                <div
-                    class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary -mt-1 -mr-1 rounded-tr-xl">
+                <!-- Hint Text -->
+                <div class="absolute bottom-24 z-20 w-full text-center px-6">
+                    <div
+                        class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
+                        <span class="material-symbols-outlined text-primary text-sm">qr_code_scanner</span>
+                        <p class="text-white/90 text-sm font-medium">Aponte para o QR Code</p>
+                    </div>
                 </div>
-                <div
-                    class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary -mb-1 -ml-1 rounded-bl-xl">
-                </div>
-                <div
-                    class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary -mb-1 -mr-1 rounded-br-xl">
-                </div>
-                <!-- Scanning Animation Line -->
-                <div
-                    class="w-full h-0.5 bg-primary shadow-[0_0_15px_rgba(19,91,236,0.8)] animate-[scan_2s_ease-in-out_infinite]">
-                </div>
-            </div>
-            <!-- Hint Text -->
-            <div class="absolute bottom-24 z-20 w-full text-center px-6">
-                <div
-                    class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
-                    <span class="material-symbols-outlined text-primary text-sm">qr_code_scanner</span>
-                    <p class="text-white/90 text-sm font-medium">Aponte para o QR Code do veículo</p>
-                </div>
-            </div>
-            <!-- Camera Controls -->
-            <div class="absolute bottom-6 z-20 flex items-center gap-6">
-                <button
-                    class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-black/60 active:scale-95 transition-all">
-                    <span class="material-symbols-outlined">image</span>
-                </button>
-                <button
-                    class="flex shrink-0 items-center justify-center rounded-full size-16 bg-white text-primary shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all">
-                    <span class="material-symbols-outlined text-3xl">camera</span>
-                </button>
-                <button
-                    class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-black/60 active:scale-95 transition-all">
-                    <span class="material-symbols-outlined">flash_on</span>
-                </button>
             </div>
         </div>
-        <!-- Result/Action Sheet (Slide Up Panel) -->
-        <div
-            class="bg-background-light dark:bg-[#1a202c] rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.4)] z-30 pb-6 transition-transform duration-300">
+
+        <!-- Result/Action Sheet (Initially Hidden) -->
+        <div id="resultSheet"
+            class="hidden absolute bottom-0 inset-x-0 bg-background-light dark:bg-[#1a202c] rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.4)] z-30 pb-6 transition-transform duration-300">
             <!-- Drag Handle -->
             <div class="w-full flex justify-center pt-3 pb-1">
                 <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
@@ -135,14 +128,14 @@
                     <div>
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Veículo Identificado</h3>
                         <div class="flex items-center gap-2 mt-0.5">
-                            <span class="text-xl font-bold text-gray-900 dark:text-white">ABC-1234</span>
-                            <span
+                            <span id="resPlate" class="text-xl font-bold text-gray-900 dark:text-white">---</span>
+                            <span id="resStatus"
                                 class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">LIBERADO</span>
                         </div>
+                        <p id="resModel" class="text-xs text-gray-400">---</p>
                     </div>
                     <div class="text-right">
-                        <div class="text-xs text-gray-500 dark:text-gray-400">Data e Hora</div>
-                        <div class="text-sm font-mono font-medium text-gray-700 dark:text-gray-200">12/10 • 14:35</div>
+                        <button id="closeSheetBtn" class="text-primary font-bold text-sm">Fechar</button>
                     </div>
                 </div>
                 <!-- Segmented Control (Entrada/Saída) -->
@@ -164,8 +157,8 @@
                 </div>
                 <!-- Observation Input -->
                 <div class="space-y-1.5">
-                    <label class="text-xs font-medium text-gray-500 dark:text-gray-400 ml-1" for="obs">Observação
-                        (Opcional)</label>
+                    <label class="text-xs font-medium text-gray-500 dark:text-gray-400 ml-1"
+                        for="obs">Observação</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="material-symbols-outlined text-gray-400 text-lg">edit_note</span>
@@ -176,7 +169,7 @@
                     </div>
                 </div>
                 <!-- Submit Button -->
-                <button
+                <button id="confirmBtn"
                     class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/20 hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors"
                     type="button">
                     <span class="material-symbols-outlined text-xl">check_circle</span>
@@ -185,6 +178,7 @@
             </div>
         </div>
     </div>
+
     <!-- Animation Keyframes for Scanner -->
     <style>
         @keyframes scan {
@@ -209,6 +203,104 @@
             }
         }
     </style>
+
+    <script>
+        let html5QrcodeScanner;
+        let currentVehicle = null;
+
+        function startScanner() {
+            html5QrcodeScanner = new Html5Qrcode("reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+            // Prefer back camera
+            html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
+        }
+
+        async function onScanSuccess(decodedText, decodedResult) {
+            // Handle on success condition with the decoded message.
+            console.log(`Scan result: ${decodedText}`, decodedResult);
+
+            // Pause scanner
+            html5QrcodeScanner.pause();
+
+            // Fetch Vehicle
+            try {
+                const doc = await db.collection('vehicles').doc(decodedText).get();
+                if (doc.exists) {
+                    currentVehicle = { id: doc.id, ...doc.data() };
+                    showResult(currentVehicle);
+                } else {
+                    alert("Veículo não encontrado ou QR Code inválido.");
+                    html5QrcodeScanner.resume();
+                }
+            } catch (error) {
+                console.error("Error fetching vehicle:", error);
+                alert("Erro ao buscar veículo.");
+                html5QrcodeScanner.resume();
+            }
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // console.warn(`Code scan error = ${error}`);
+        }
+
+        function showResult(vehicle) {
+            document.getElementById('resPlate').innerText = vehicle.plate;
+            document.getElementById('resModel').innerText = vehicle.model + ' • ' + vehicle.color;
+
+            // Hide overlay, show sheet
+            document.getElementById('scanOverlay').classList.add('hidden');
+            document.getElementById('resultSheet').classList.remove('hidden');
+        }
+
+        function closeResult() {
+            document.getElementById('resultSheet').classList.add('hidden');
+            document.getElementById('scanOverlay').classList.remove('hidden');
+            document.getElementById('obs').value = '';
+            currentVehicle = null;
+            html5QrcodeScanner.resume();
+        }
+
+        document.getElementById('closeSheetBtn').addEventListener('click', closeResult);
+
+        document.getElementById('confirmBtn').addEventListener('click', async () => {
+            if (!currentVehicle) return;
+
+            const btn = document.getElementById('confirmBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Salvando...';
+            btn.disabled = true;
+
+            const type = document.querySelector('input[name="access_type"]:checked').value;
+            const obs = document.getElementById('obs').value;
+
+            try {
+                await db.collection('history').add({
+                    vehicleId: currentVehicle.id,
+                    plate: currentVehicle.plate,
+                    model: currentVehicle.model,
+                    type: type, // 'entry' or 'exit'
+                    obs: obs,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert('Registro salvo com sucesso!');
+                closeResult();
+
+            } catch (error) {
+                console.error("Error saving history:", error);
+                alert("Erro ao salvar registro.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Start immediately
+        window.addEventListener('load', startScanner);
+
+    </script>
 </body>
 
 </html>
