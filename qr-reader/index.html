@@ -126,7 +126,7 @@
                         <div class="flex items-center gap-2 mt-0.5">
                             <span id="resPlate" class="text-xl font-bold text-gray-900 dark:text-white">---</span>
                             <span id="resStatus"
-                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">LIBERADO</span>
+                                class="inline-block w-4 h-4 rounded-full transition-all duration-300 border border-white/20"></span>
                         </div>
                         <p id="resModel" class="text-xs text-gray-400">---</p>
                     </div>
@@ -297,24 +297,24 @@
             document.getElementById('resPlate').innerText = vehicle.plate;
             document.getElementById('resModel').innerText = vehicle.model + ' • ' + vehicle.color;
 
-            // Update Status Badge logic
+            // LED Indicator Logic
             const statusBadge = document.getElementById('resStatus');
             const entryRadio = document.querySelector('input[name="access_type"][value="entry"]');
             const exitRadio = document.querySelector('input[name="access_type"][value="exit"]');
 
+            // Reset base classes for a "LED" look
+            statusBadge.innerText = ''; // Remove text
+            statusBadge.className = "inline-block w-4 h-4 rounded-full transition-all duration-300 border border-white/20";
+
             if (lastType === 'entry') {
-                statusBadge.innerText = 'DENTRO';
-                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800";
+                // INSIDE -> GREEN LED
+                statusBadge.classList.add('bg-green-500', 'shadow-[0_0_15px_rgba(34,197,94,1)]');
                 // Auto-select Exit
                 exitRadio.checked = true;
-            } else if (lastType === 'exit') {
-                statusBadge.innerText = 'FORA';
-                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700";
-                // Auto-select Entry
-                entryRadio.checked = true;
             } else {
-                statusBadge.innerText = 'NOVO';
-                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800";
+                // OUTSIDE/NEW -> RED LED
+                statusBadge.classList.add('bg-red-500', 'shadow-[0_0_15px_rgba(239,68,68,1)]');
+                // Auto-select Entry
                 entryRadio.checked = true;
             }
 
