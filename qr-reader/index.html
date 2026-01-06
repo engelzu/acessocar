@@ -265,11 +265,15 @@
                         // Find latest by timestamp in client-side
                         const docs = historySnap.docs.map(d => d.data());
                         docs.sort((a, b) => {
-                            const tA = a.timestamp ? a.timestamp.seconds : 0;
-                            const tB = b.timestamp ? b.timestamp.seconds : 0;
+                            // Handle pending writes (null timestamp) as 'Now' (Highest priority)
+                            const tA = a.timestamp ? a.timestamp.seconds : Number.MAX_SAFE_INTEGER;
+                            const tB = b.timestamp ? b.timestamp.seconds : Number.MAX_SAFE_INTEGER;
                             return tB - tA; // Descending (newest first)
                         });
                         lastMovementType = docs[0].type;
+
+                        // Debug (Optional, can remove if annoying)
+                        console.log("Last Movement Detected:", lastMovementType);
                     }
 
                     showResult(currentVehicle, lastMovementType);
