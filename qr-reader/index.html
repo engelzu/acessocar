@@ -216,12 +216,12 @@
     <script>
         let html5QrcodeScanner;
         let currentVehicle = null;
+        let lastMovementType = null; // 'entry' or 'exit'
 
         function startScanner() {
             html5QrcodeScanner = new Html5Qrcode("reader");
 
             // Config using fixed box size to match visual overlay (250px)
-            // This ensures user only scans what is inside the box
             const config = {
                 fps: 10,
                 qrbox: { width: 250, height: 250 },
@@ -231,7 +231,6 @@
                 formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE]
             };
 
-            // Prefer back camera ("environment")
             html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
                 .catch(err => {
                     console.error("Error starting scanner", err);
@@ -246,18 +245,28 @@
         }
 
         async function onScanSuccess(decodedText, decodedResult) {
-            // Handle on success condition with the decoded message.
             console.log(`Scan result: ${decodedText}`, decodedResult);
-
-            // Pause scanner
             html5QrcodeScanner.pause();
 
-            // Fetch Vehicle
             try {
+                // 1. Fetch Vehicle Data
                 const doc = await db.collection('vehicles').doc(decodedText).get();
                 if (doc.exists) {
                     currentVehicle = { id: doc.id, ...doc.data() };
-                    showResult(currentVehicle);
+
+                    // 2. Fetch Last Movement for Status
+                    const historySnap = await db.collection('history')
+                        .where('vehicleId', '==', currentVehicle.id)
+                        .orderBy('timestamp', 'desc')
+                        .limit(1)
+                        .get();
+
+                    lastMovementType = null;
+                    if (!historySnap.empty) {
+                        lastMovementType = historySnap.docs[0].data().type;
+                    }
+
+                    showResult(currentVehicle, lastMovementType);
                 } else {
                     alert("Veículo não encontrado ou QR Code inválido.");
                     html5QrcodeScanner.resume();
@@ -270,15 +279,35 @@
         }
 
         function onScanFailure(error) {
-            // handle scan failure, usually better to ignore and keep scanning.
-            // console.warn(`Code scan error = ${error}`);
+            // handle error
         }
 
-        function showResult(vehicle) {
+        function showResult(vehicle, lastType) {
+            // Update Text
             document.getElementById('resPlate').innerText = vehicle.plate;
             document.getElementById('resModel').innerText = vehicle.model + ' • ' + vehicle.color;
 
-            // Hide overlay, show sheet
+            // Update Status Badge logic
+            const statusBadge = document.getElementById('resStatus');
+            const entryRadio = document.querySelector('input[name="access_type"][value="entry"]');
+            const exitRadio = document.querySelector('input[name="access_type"][value="exit"]');
+
+            if (lastType === 'entry') {
+                statusBadge.innerText = 'DENTRO';
+                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800";
+                // Auto-select Exit
+                exitRadio.checked = true;
+            } else if (lastType === 'exit') {
+                statusBadge.innerText = 'FORA';
+                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700";
+                // Auto-select Entry
+                entryRadio.checked = true;
+            } else {
+                statusBadge.innerText = 'NOVO';
+                statusBadge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800";
+                entryRadio.checked = true;
+            }
+
             document.getElementById('scanOverlay').classList.add('hidden');
             document.getElementById('resultSheet').classList.remove('hidden');
         }
@@ -288,6 +317,7 @@
             document.getElementById('scanOverlay').classList.remove('hidden');
             document.getElementById('obs').value = '';
             currentVehicle = null;
+            lastMovementType = null;
             html5QrcodeScanner.resume();
         }
 
@@ -296,12 +326,24 @@
         document.getElementById('confirmBtn').addEventListener('click', async () => {
             if (!currentVehicle) return;
 
+            const selectedType = document.querySelector('input[name="access_type"]:checked').value;
+
+            // WARNING CHECK logic
+            if (lastMovementType && lastMovementType === selectedType) {
+                const action = selectedType === 'entry' ? 'ENTRADA' : 'SAÍDA';
+                // Wait for UI to render alert properly by small timeout if needed, but alert blocks execution so it's fine.
+                const msg = `ATENÇÃO:\n\nEste veículo já consta com registro de ${action} anterior.\nIsso significa que o movimento oposto não foi registrado.\n\nDeseja registrar ${action} novamente mesmo assim?`;
+
+                if (!confirm(msg)) {
+                    return; // Abort if user cancels
+                }
+            }
+
             const btn = document.getElementById('confirmBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = 'Salvando...';
             btn.disabled = true;
 
-            const type = document.querySelector('input[name="access_type"]:checked').value;
             const obs = document.getElementById('obs').value;
 
             try {
@@ -309,7 +351,7 @@
                     vehicleId: currentVehicle.id,
                     plate: currentVehicle.plate,
                     model: currentVehicle.model,
-                    type: type, // 'entry' or 'exit'
+                    type: selectedType, // 'entry' or 'exit'
                     obs: obs,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
