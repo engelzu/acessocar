@@ -181,39 +181,36 @@
 
             0%,
             100% {
-
-                0%,
-                100% {
-                    transform: translateY(0);
-                    opacity: 0;
-                }
-
-                10% {
-                    opacity: 1;
-                }
-
-                50% {
-                    transform: translateY(250px);
-                    opacity: 1;
-                }
-
-                90% {
-                    opacity: 1;
-                }
+                transform: translateY(0);
+                opacity: 0;
             }
 
-            /* Ensure video fills container */
-            #reader {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
+            10% {
+                opacity: 1;
             }
 
-            #reader video {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
+            50% {
+                transform: translateY(250px);
+                opacity: 1;
             }
+
+            90% {
+                opacity: 1;
+            }
+        }
+
+        /* Ensure video fills container */
+        #reader {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #reader video {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
     </style>
 
     <script>
@@ -223,17 +220,11 @@
         function startScanner() {
             html5QrcodeScanner = new Html5Qrcode("reader");
 
-            // Config for full screen scanning
+            // Config using fixed box size to match visual overlay (250px)
+            // This ensures user only scans what is inside the box
             const config = {
                 fps: 10,
-                // Dynamically calculate qrbox to be about 70% of the smaller dimension
-                qrbox: (viewfinderWidth, viewfinderHeight) => {
-                    const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
-                    return {
-                        width: Math.floor(minEdge * 0.7),
-                        height: Math.floor(minEdge * 0.7)
-                    };
-                },
+                qrbox: { width: 250, height: 250 },
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true
                 },
