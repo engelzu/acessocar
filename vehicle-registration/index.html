@@ -22,6 +22,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <!-- Firebase Init -->
     <script src="../js/firebase-init.js"></script>
+    <!-- Auth Protection -->
+    <script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '../login/index.html';
+            }
+        });
+    </script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -82,7 +90,7 @@
         </div>
         <!-- Header -->
         <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between z-10">
-            <button onclick="window.location.href='../dashboard/code.html'"
+            <button onclick="window.location.href='../dashboard/index.html'"
                 class="text-gray-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
                 <span class="material-symbols-outlined">arrow_back_ios_new</span>
             </button>
