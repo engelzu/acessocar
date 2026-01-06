@@ -24,6 +24,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <!-- Firebase Init -->
     <script src="../js/firebase-init.js"></script>
+    <!-- Auth Protection -->
+    <script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '../login/index.html';
+            }
+        });
+    </script>
     <!-- Tailwind Configuration -->
     <script id="tailwind-config">
         tailwind.config = {
@@ -62,14 +70,14 @@
         <!-- Header -->
         <div
             class="sticky top-0 z-20 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-border-light dark:border-border-dark/30">
-            <div onclick="window.location.href='../dashboard/code.html'"
+            <div onclick="window.location.href='../dashboard/index.html'"
                 class="flex size-12 shrink-0 items-center justify-start text-gray-900 dark:text-white cursor-pointer">
                 <span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios</span>
             </div>
             <h2
                 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
                 Cadastro de Motorista</h2>
-            <div onclick="window.location.href='../dashboard/code.html'"
+            <div onclick="window.location.href='../dashboard/index.html'"
                 class="flex w-16 items-center justify-end cursor-pointer">
                 <p class="text-primary text-base font-semibold leading-normal tracking-[0.015em] shrink-0">Cancelar</p>
             </div>
